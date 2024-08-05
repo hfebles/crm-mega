@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Mantenice;
 
 use App\Http\Controllers\Controller;
+use App\Models\Mantenice\Country;
 use App\Models\Mantenice\Rate;
 use Illuminate\Http\Request;
 
@@ -10,7 +11,7 @@ class RateController extends Controller
 {
 
     protected $section = "Configuraciones";
-    protected $subsection = "Bancos";
+    protected $subsection = "Tasas";
 
     public function index()
     {
@@ -19,9 +20,12 @@ class RateController extends Controller
             'content_header_title' => $this->section,
             'content_header_subtitle' => $this->subsection,
         ];
-        $datas = Rate::paginate(10);
-        // return $datas;
-        return view('mantenice.rates.index', compact('config', 'datas'));
+        $countries = Country::pluck('name', '_id');
+        $datas = Rate::select('r.name', 'r.amount', "r._id", 'c.name as countryName')
+            ->from('rates as r')
+            ->join('countries as c', 'r.country', '=', 'c._id')
+            ->paginate(10);
+        return view('mantenice.rates.index', compact('config', 'datas', 'countries'));
     }
 
 
@@ -64,14 +68,23 @@ class RateController extends Controller
         return ['amount' => $finalAmount];
     }
 
-
+    public function store(Request $request)
+    {
+        // return $request;
+        $rate = new Rate();
+        $rate->name = strtoupper($request->name);
+        $rate->amount = $request->amount;
+        $rate->country = $request->country;
+        $rate->type = 1;
+        $rate->save();
+        return back();
+    }
 
     public function updateRate(Request $request, $id)
     {
-        // return $request;
         $rate = Rate::find($id);
         if ($request->name) {
-            $rate->name = $request->name;
+            $rate->name = strtoupper($request->name);
         }
 
         if ($request->amount) {
@@ -93,5 +106,11 @@ class RateController extends Controller
     {
         $rate = Rate::find($id);
         return $rate;
+    }
+
+    public function delete($id)
+    {
+        $rate = Rate::destroy($id);
+        return back();
     }
 }

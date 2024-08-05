@@ -86,4 +86,12 @@ class BankController extends Controller
 
         return $data;
     }
+
+
+    public function deleteBank($id)
+    {
+        // return $id;
+        Bank::destroy($id);
+        return back();
+    }
 }

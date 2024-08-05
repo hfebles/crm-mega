@@ -11,14 +11,15 @@
                 <div class="card-body">
                     <div class="d-flex align-items-center justify-content-between">
                         <div class="w-10">
-                            <a href="{{ route('home') }}" type="button" class="btn btn-dark btn-sm">Regresar</a>
+                            <a href="{{ route('home') }}" type="button" class="btn btn-dark btn-sm">
+                                <i class="fas fa-chevron-circle-left" aria-hidden="true"></i> Regresar</a>
                         </div>
                         <div class="w-80">
                             <h3>Lista de Operaciones</h3>
                         </div>
                         <div class="w-10">
                             <a class="btn btn-success btn-sm" type="button" href="{{ $config['create'] }}">
-                                Nuevo
+                                <i class="fas fa-plus-circle" aria-hidden="true"></i>
                             </a>
                         </div>
                     </div>
@@ -57,12 +58,12 @@
                                             <div class="btn-group" role="group" aria-label="Basic example">
                                                 <a href="{{ route('transfers.show', $data->_id) }}"
                                                     class="btn btn-info btn-sm" type="button">
-                                                    VER
+                                                    <i class="fas fa-eye" aria-hidden="true"></i>
                                                 </a>
                                                 <a target="_blank"
                                                     href="{{ route('transfers.print-invoice', $data->_id) }}"
                                                     class="btn btn-warning btn-sm" type="button">
-                                                    imprimir
+                                                    <i class="fas fa-print" aria-hidden="true"></i>
                                                 </a>
 
                                             </div>

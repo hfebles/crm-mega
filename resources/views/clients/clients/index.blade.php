@@ -11,7 +11,8 @@
                 <div class="card-body">
                     <div class="d-flex align-items-center justify-content-between">
                         <div class="w-10">
-                            <a href="{{ route('home') }}" type="button" class="btn btn-dark btn-sm">Regresar</a>
+                            <a href="{{ route('home') }}" type="button" class="btn btn-dark btn-sm"><i
+                                    class="fas fa-chevron-circle-left" aria-hidden="true"></i> Regresar</a>
                         </div>
                         <div class="w-80">
                             <h3>Lista de clientes</h3>
@@ -19,7 +20,7 @@
 
                         <div class="w-10">
                             <a class="btn btn-success btn-sm" type="button" href="{{ route('clients.create') }}">
-                                Nuevo
+                                <i class="fas fa-plus-circle" aria-hidden="true"></i>
                             </a>
                         </div>
                     </div>
@@ -30,7 +31,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <input type="text" name="search" id="search" onkeyup="search(this.value);">
+                <input type="text" placeholder="Buscar" name="search" id="search" onkeyup="search(this.value);">
             </div>
         </div>
     </div>

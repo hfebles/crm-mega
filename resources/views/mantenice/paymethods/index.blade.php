@@ -11,7 +11,8 @@
                 <div class="card-body">
                     <div class="d-flex align-items-center justify-content-between">
                         <div class="w-10">
-                            <a href="{{ route('home') }}" type="button" class="btn btn-dark btn-sm">Regresar</a>
+                            <a href="{{ route('home') }}" type="button" class="btn btn-dark btn-sm"><i
+                                    class="fas fa-chevron-circle-left" aria-hidden="true"></i> Regresar</a>
                         </div>
                         <div class="w-80">
                             <h3>Lista de metodos de pago</h3>
@@ -20,7 +21,7 @@
                         <div class="w-10">
                             <button class="btn btn-success btn-sm" type="button" data-bs-toggle="offcanvas"
                                 data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
-                                Nuevo
+                                <i class="fas fa-plus-circle" aria-hidden="true"></i>
                             </button>
                         </div>
                     </div>
@@ -37,6 +38,8 @@
                             <tr class="text-uppercase text-center">
                                 <th width="4%">#</th>
                                 <th>Nombre</th>
+                                <th>Abreviatura</th>
+                                <th>Estado</th>
                                 <th width="10%">Acciones</th>
                             </tr>
                         </thead>
@@ -46,15 +49,37 @@
                                     <tr>
                                         <td class="text-center">{{ $data->_id }}</td>
                                         <td>{{ $data->name }}</td>
-                                        <td>
+                                        <td>{{ $data->short }}</td>
+                                        <td class="text-center">
+                                            @if ($data->enable == 1)
+                                                <span class="badge badge-success">
+                                                    <i class="fas fa-check"></i>
+                                                </span>
+                                            @else
+                                                <span class="badge badge-danger">
+                                                    <i class="fas fa-times"></i>
+                                                </span>
+                                            @endif
+
+                                        </td>
+                                        <td class="text-center">
                                             <div class="btn-group" role="group" aria-label="Basic example">
                                                 <button class="btn btn-warning btn-sm" type="button"
                                                     onclick="editBanks({{ $data->_id }})" data-bs-toggle="offcanvas"
                                                     data-bs-target="#offcanvasExampleEdit"
                                                     aria-controls="offcanvasExampleEdit">
-                                                    Editar
+                                                    <i class="fas fa-edit"></i>
                                                 </button>
-                                                <button type="button" class="btn btn-danger btn-sm">Eliminar</button>
+                                                @if ($data->enable == 1)
+                                                    <a href="{{ route('pay-methods.inactive', $data->_id) }}" type="button"
+                                                        class="btn btn-danger btn-sm"><i class="fas fa-times"></i></a>
+                                                @else
+                                                    <a href="{{ route('pay-methods.inactive', $data->_id) }}" type="button"
+                                                        class="btn btn-success btn-sm"><i class="fas fa-check"></i></a>
+                                                @endif
+                                                <a href="{{ route('pay-methods.delete', $data->_id) }}" type="button"
+                                                    class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
+
                                             </div>
                                         </td>
                                     </tr>
@@ -90,6 +115,12 @@
                     <div class='input-group'>
                         <input class='form-control form-control-sm' required name='name'
                             placeholder='Nombre del metodode pago' />
+                    </div>
+                    <label for='name'>
+                        Abreviacion
+                    </label>
+                    <div class='input-group'>
+                        <input class='form-control form-control-sm' required name='short' placeholder='Abreviacion' />
                     </div>
                     <div class='col-12 mt-4'>
                         <button class='btn btn-success btn-sm' type='submit'>Guardar</button>

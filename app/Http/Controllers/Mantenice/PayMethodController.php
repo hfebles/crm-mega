@@ -55,45 +55,77 @@ class PayMethodController extends Controller
 
 
 
-    // public function store(Request $request)
-    // {
+    public function store(Request $request)
+    {
 
-    //     $banco = new Bank();
-    //     $banco->name = strtoupper($request->name);
-    //     $banco->save();
-    //     return back();
-    // }
+        $pay_method = new PayMethod();
+        $pay_method->name = strtoupper($request->name);
+        $pay_method->short = strtoupper($request->short);
 
-    // public function edit($id)
-    // {
-    //     $data = Bank::find($id);
+        $pay_method->save();
+        return back();
+    }
 
-    //     $response = "
-    //     <form method='POST' action=" . route('banks.update-bank', $id) . ">
-    //         <input type='hidden' name='_token' value='" . csrf_token() . "' />
-    //         <div class='row'>
-    //             <div class='form-group col-md-12'>
-    //                 <label for='name'>
-    //                     Nombre del Banco
-    //                 </label>
-    //                 <div class='input-group'>
-    //                     <input class='form-control form-control-sm' required name='name' placeholder='Nombre del Banco' value='" . $data->name . "' />
-    //                 </div>
-    //                 <div class='col-12 mt-4'>
-    //                     <button class='btn btn-success btn-sm' type='submit'>Guardar</button>
-    //                 </div>
-    //             </div>
-    //         </form>";
-    //     return response()->json(array('response' => $response));
-    // }
+    public function edit($id)
+    {
+        $data = PayMethod::find($id);
 
-    // public function updateBank(Request $request, $id)
-    // {
-    //     $data = Bank::find($id);
-    //     $data->name = strtoupper($request->name);
-    //     $data->save();
-    //     return back();
-    // }
+        $response = "
+        <form method='POST' action=" . route('pay-methods.update-method', $id) . ">
+            <input type='hidden' name='_token' value='" . csrf_token() . "' />
+            <div class='row'>
+                <div class='form-group col-md-12'>
+                    <label for='name'>
+                        Nombre del Banco
+                    </label>
+                    <div class='input-group'>
+                        <input class='form-control form-control-sm' required name='name' placeholder='Nombre del Banco' value='" . $data->name . "' />
+                    </div>
+                    <label for='name'>
+                        Abreviacion
+                    </label>
+                    <div class='input-group'>
+                        <input class='form-control form-control-sm' required name='short'  value='" . $data->short . "' placeholder='Abreviacion' />
+                    </div>
+                    <div class='col-12 mt-4'>
+                        <button class='btn btn-success btn-sm' type='submit'>Guardar</button>
+                    </div>
+                </div>
+            </form>";
+        return response()->json(array('response' => $response));
+    }
+
+    public function updateMethod(Request $request, $id)
+    {
+        // return $request;
+        $data = PayMethod::find($id);
+        $data->name = strtoupper($request->name);
+        if ($request->short) {
+            $data->short = strtoupper($request->short);
+        }
+        $data->save();
+        return back();
+    }
+    public function inactive($id)
+    {
+        $data = PayMethod::find($id);
+        if ($data->enable == 0) {
+            $data->enable = 1;
+        } else {
+            $data->enable = 0;
+        }
+
+
+        $data->save();
+        return back();
+    }
+    public function delete($id)
+    {
+        PayMethod::destroy($id);
+        return back();
+    }
+
+
 
     // public function searchBank($id)
     // {

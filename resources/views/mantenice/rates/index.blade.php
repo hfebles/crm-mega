@@ -11,16 +11,17 @@
                 <div class="card-body">
                     <div class="d-flex align-items-center justify-content-between">
                         <div class="w-10">
-                            <a href="{{ route('home') }}" type="button" class="btn btn-dark btn-sm">Regresar</a>
+                            <a href="{{ route('home') }}" type="button" class="btn btn-dark btn-sm"><i
+                                    class="fas fa-chevron-circle-left" aria-hidden="true"></i> Regresar</a>
                         </div>
                         <div class="w-80">
-                            <h3>Lista de bancos</h3>
+                            <h3>Lista de Tasas</h3>
                         </div>
 
                         <div class="w-10">
                             <button class="btn btn-success btn-sm" type="button" data-bs-toggle="offcanvas"
                                 data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
-                                Nuevo
+                                <i class="fas fa-plus-circle" aria-hidden="true"></i>
                             </button>
                         </div>
                     </div>
@@ -37,7 +38,8 @@
                             <tr class="text-uppercase text-center">
                                 <th width="4%">#</th>
                                 <th>Nombre</th>
-                                <th>Monto</th>
+                                <th width="7%">Monto</th>
+                                <th>Pais</th>
                                 <th width="10%">Acciones</th>
                             </tr>
                         </thead>
@@ -47,15 +49,18 @@
                                     <tr>
                                         <td class="text-center">{{ $data->_id }}</td>
                                         <td>{{ $data->name }}</td>
-                                        <td>{{ $data->amount }}</td>
+                                        <td class="text-end">{{ $data->amount }}</td>
+                                        <td>{{ $data->countryName }}</td>
                                         <td class="text-center">
                                             <div class="btn-group " role="group" aria-label="Basic example">
                                                 <button class="btn btn-warning btn-sm" type="button"
                                                     onclick="editRates({{ $data->_id }})" data-bs-toggle="offcanvas"
                                                     data-bs-target="#offcanvasExampleEdit"
                                                     aria-controls="offcanvasExampleEdit">
-                                                    Editar
+                                                    <i class="fas fa-edit"></i>
                                                 </button>
+                                                <a href="{{ route('rates.delete', $data->_id) }}" type="button"
+                                                    class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
                                             </div>
                                         </td>
                                     </tr>
@@ -81,16 +86,31 @@
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
-            <form method="POST" action="{{ route('banks.store') }}">
+            <form method="POST" action="{{ route('rates.store') }}">
                 @csrf
                 <div class='form-group col-md-12'>
                     <label for='name'>
-                        Nombre del Banco
+                        Nombre de la tasa
                     </label>
                     <div class='input-group'>
                         <input class='form-control form-control-sm' required name='name'
-                            placeholder='Nombre del Banco' />
+                            placeholder='Nombre de la tasa' />
                     </div>
+                    <label for='name'>
+                        Monto
+                    </label>
+                    <div class='input-group'>
+                        <input class='form-control form-control-sm' required name='amount' placeholder='Monto' />
+                    </div>
+                    <label for='name'>
+                        Pais
+                    </label>
+                    <select class="form-select form-select-sm" name="country" id="country">
+                        <option value="">Seleccione</option>
+                        @foreach ($countries as $kContry => $vContry)
+                            <option value="{{ $kContry }}">{{ $vContry }}</option>
+                        @endforeach
+                    </select>
                     <div class='col-12 mt-4'>
                         <button class='btn btn-success btn-sm' type='submit'>Guardar</button>
                     </div>
@@ -105,7 +125,6 @@
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
-
             <div id="content-update"></div>
         </div>
     </div>

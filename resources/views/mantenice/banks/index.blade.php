@@ -11,7 +11,8 @@
                 <div class="card-body">
                     <div class="d-flex align-items-center justify-content-between">
                         <div class="w-10">
-                            <a href="{{ route('home') }}" type="button" class="btn btn-dark btn-sm">Regresar</a>
+                            <a href="{{ route('home') }}" type="button" class="btn btn-dark btn-sm"><i
+                                    class="fas fa-chevron-circle-left" aria-hidden="true"></i> Regresar</a>
                         </div>
                         <div class="w-80">
                             <h3>Lista de bancos</h3>
@@ -21,7 +22,7 @@
 
                             <button class="btn btn-success btn-sm" type="button" data-bs-toggle="offcanvas"
                                 data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
-                                Nuevo
+                                <i class="fas fa-plus-circle" aria-hidden="true"></i>
                             </button>
                         </div>
                     </div>
@@ -47,15 +48,16 @@
                                     <tr>
                                         <td class="text-center">{{ $data->_id }}</td>
                                         <td>{{ $data->name }}</td>
-                                        <td>
+                                        <td class="text-center">
                                             <div class="btn-group" role="group" aria-label="Basic example">
                                                 <button class="btn btn-warning btn-sm" type="button"
                                                     onclick="editBanks({{ $data->_id }})" data-bs-toggle="offcanvas"
                                                     data-bs-target="#offcanvasExampleEdit"
                                                     aria-controls="offcanvasExampleEdit">
-                                                    Editar
+                                                    <i class="fas fa-edit"></i>
                                                 </button>
-                                                <button type="button" class="btn btn-danger btn-sm">Eliminar</button>
+                                                <a href="{{ route('banks.delete-bank', $data->_id) }}" type="button"
+                                                    class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
                                             </div>
                                         </td>
                                     </tr>
