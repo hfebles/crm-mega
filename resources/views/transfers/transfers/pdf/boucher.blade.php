@@ -98,7 +98,7 @@
             </td>
         </tr>
         <tr class="active">
-            <td style="text-align: right; padding:5px"> <strong> Nombre Completo :</strong></td>
+            <td style="text-align: right; padding:5px"> <strong> Nombre Completo:</strong></td>
             <td style="text-align: right; padding:5px">{{ $data->headline }}</td>
         </tr>
         <tr class="active">

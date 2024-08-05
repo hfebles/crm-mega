@@ -55,12 +55,15 @@
                                         <td class="text-center">{{ date('d/m/Y', strtotime($data->date)) }}</td>
                                         <td class="text-center">
                                             <div class="btn-group" role="group" aria-label="Basic example">
-                                                <a href="" class="btn btn-info btn-sm" type="button">
+                                                <a href="{{ route('transfers.show', $data->_id) }}"
+                                                    class="btn btn-info btn-sm" type="button">
                                                     VER
                                                 </a>
-                                                <button class="btn btn-warning btn-sm" type="button">
+                                                <a target="_blank"
+                                                    href="{{ route('transfers.print-invoice', $data->_id) }}"
+                                                    class="btn btn-warning btn-sm" type="button">
                                                     imprimir
-                                                </button>
+                                                </a>
 
                                             </div>
                                         </td>

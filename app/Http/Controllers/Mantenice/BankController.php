@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class BankController extends Controller
 {
     protected $section = "Configuraciones";
-    protected $subsection = "Bancos";
+    protected $subsection = "Tasas";
 
     public function index()
     {

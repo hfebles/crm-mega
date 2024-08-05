@@ -357,7 +357,7 @@ return [
                 ],
                 [
                     'text' => 'Tasas',
-                    'url' => '#',
+                    'url' => 'mantenice/rates',
                 ],
                 [
                     'text' => 'Usuarios',

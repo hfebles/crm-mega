@@ -32,6 +32,7 @@ class TransferController extends Controller
 
         $datas = Transfer::select('transfers._id', "transfers.client_id", "transfers.client_account_id", "transfers.date", "transfers.headline_amount", "transfers.client_amount", 'clients.country', 'clients.code', 'clients.names')
             ->join('clients', 'clients._id', '=', 'transfers.client_id')
+            ->orderBy('transfers._id', 'DESC')
             ->paginate(10);
 
 
@@ -84,6 +85,7 @@ class TransferController extends Controller
 
     public function store(Request $request)
     {
+        // return $request;
         $rate = Rate::find($request->rate)->amount;
 
         $transfer = new Transfer();
@@ -98,7 +100,42 @@ class TransferController extends Controller
 
         $transfer->save();
 
-        return redirect()->route('clients.index');
+        return redirect()->route('transfers.show', $transfer->_id);
+    }
+
+
+    public function show($id)
+    {
+        //  $transfer = Transfer::find($id);
+        $config = [
+            'subtitle' => $this->subsection,
+            'content_header_title' => $this->section,
+            'content_header_subtitle' => $this->subsection,
+            'back' => route('transfers.index')
+        ];
+
+        $data = Transfer::select(
+            "transfers._id as transferId",
+            "transfers.created_at as transferDate",
+            "transfers.*",
+            "clients.*",
+            "pay_methods.name as payment_name",
+            "client_accounts.headline",
+            "client_accounts.headline_dni",
+            "client_accounts.headline_phone",
+            "client_accounts.bank_account_number",
+            "banks.name as bankName"
+        )
+            ->join("clients", "clients._id", "=", "transfers.client_id")
+            ->join("pay_methods", "pay_methods._id", "=", "transfers.pay_method_id")
+            ->join("client_accounts", "client_accounts.client_id", "=", "clients._id")
+            ->join("banks", "client_accounts.bank_id", "=", "banks._id")
+
+
+            ->where("transfers._id", "=", $id)
+            ->get()[0];
+
+        return view('transfers.transfers.show', compact('data', 'config'));
     }
 
 

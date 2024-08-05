@@ -33,13 +33,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('mantenice/rates', RateController::class);
     Route::get('mantenice/rates/find-rate/{id}', [RateController::class, 'findRate'])->name('rates.find-rate');
     Route::post('mantenice/rates/update-rate/{id}', [RateController::class, 'updateRate'])->name('rates.update-rate');
-
-
-
-
     Route::post('/mantenice/rates/calculate-amount', [RateController::class, 'calculateAmount'])->name('rates.calculate-amount');
-
-
     Route::post('mantenice/banks/{id}/update-bank', [BankController::class, 'updateBank'])->name('banks.update-bank');
 
     // Clients
