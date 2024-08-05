@@ -62,6 +62,7 @@
                                     <label for="name">Banco:</label>
                                     <input disabled type="text" class="form-control form-control-sm" name="bank_name"
                                         id="bank_name">
+                                    <input type="hidden" name="bank_id" id="bank">
                                 </div>
                             </div>
                             <div class="col-3">
@@ -187,10 +188,9 @@
                 })
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data)
-
                     document.querySelector('#bank_name').value = data.bank_name;
                     document.querySelector('#headline').value = data.headline;
+                    document.querySelector('#bank').value = data.bankId;
                     document.querySelector('#headline_dni').value = data.headline_dni
                 })
                 .catch(error => console.error('Error:', error));
