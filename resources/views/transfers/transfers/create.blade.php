@@ -94,10 +94,11 @@
                             <div class="col-3">
                                 <div class="form-group">
                                     <label for="name">Metodo de pago</label>
-                                    <select class="form-select form-select-sm" name="pay_method" id="pay_method">
+                                    <select class="form-select form-select-sm" name="pay_method" id="rate">
                                         <option value="">Seleccione</option>
-                                        <option value="">Transferencia</option>
-                                        <option value="">Pago movil</option>
+                                        @foreach ($datas['method_pay'] as $kMP => $vMP)
+                                            <option value="{{ $kMP }}">{{ $vMP }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>

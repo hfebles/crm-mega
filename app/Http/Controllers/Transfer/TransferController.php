@@ -77,7 +77,8 @@ class TransferController extends Controller
         ];
         $rate = Rate::pluck('name', '_id');
         $clients = Client::pluck('names', '_id');
-        $datas = ['clients' => $clients, 'rates' => $rate];
+        $methodPays = PayMethod::pluck('name', '_id');
+        $datas = ['clients' => $clients, 'rates' => $rate, "method_pay" => $methodPays];
         return view('transfers.transfers.create', compact('datas', 'config'));
     }
 
