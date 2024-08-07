@@ -15,7 +15,7 @@
                                     class="fas fa-chevron-circle-left" aria-hidden="true"></i> Regresar</a>
                         </div>
                         <div class="w-80">
-                            <h3>Lista de bancos</h3>
+                            <h3>Lista de dinero ingresado</h3>
                         </div>
 
                         <div class="w-10">
@@ -38,16 +38,24 @@
                         <thead class="thead-dark text-uppercase text-center">
                             <tr>
                                 <th width="4%">#</th>
-                                <th>Nombre</th>
+                                <th>Banco</th>
+                                <th>Ingresado</th>
+                                <th>Disponible</th>
+                                <th>Fecha</th>
                                 <th width="10%">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
                             @if (count($datas) > 0)
-                                @foreach ($datas as $data)
+                                @foreach ($datas as $keys => $data)
                                     <tr>
-                                        <td class="text-center">{{ $data->_id }}</td>
-                                        <td>{{ $data->name }}</td>
+                                        <td class="text-center">{{ ++$keys }}</td>
+                                        <td class="text-center">{{ $data->name }}</td>
+                                        <td class="text-end">{{ number_format($data->amount, 2, ',', '.') }}</td>
+                                        <td class="text-end">
+                                            {{ $data->resto ? $data->resto : number_format($data->amount, 2, ',', '.') }}
+                                        </td>
+                                        <td class="text-center">{{ date('d-m-Y', strtotime($data->created_at)) }}</td>
                                         <td class="text-center">
                                             <div class="btn-group" role="group" aria-label="Basic example">
                                                 <button class="btn btn-warning btn-sm" type="button"
@@ -56,22 +64,19 @@
                                                     aria-controls="offcanvasExampleEdit">
                                                     <i class="fas fa-edit"></i>
                                                 </button>
-                                                <a href="{{ route('banks.delete-bank', $data->_id) }}" type="button"
-                                                    class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
+
                                             </div>
                                         </td>
                                     </tr>
                                 @endforeach
                             @else
                                 <tr class="text-center">
-                                    <td colspan="3">No existen bancos registrados.</td>
+                                    <td colspan="6">No existen registros.</td>
                                 </tr>
                             @endif
                         </tbody>
                     </table>
-                    <div class="col-12 mt-3 text-center">
-                        {{ $datas->links() }}
-                    </div>
+
 
                 </div>
             </div>
@@ -79,20 +84,26 @@
     </div>
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
         <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Nuevo Banco</h5>
+            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Nuevo registro</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
-            <form method="POST" action="{{ route('banks.store') }}">
+            <form method="POST" action="{{ route('bs.store') }}">
                 @csrf
                 <div class='form-group col-md-12'>
                     <label for='name'>
                         Nombre del Banco
                     </label>
-                    <div class='input-group'>
-                        <input class='form-control form-control-sm' required name='name'
-                            placeholder='Nombre del Banco' />
-                    </div>
+                    <select class="form-select form-select-sm" name="bank_id" id="bank_id" required>
+                        <option value="">Seleccione</option>
+                        @foreach ($banks as $bKey => $bValue)
+                            <option value="{{ $bKey }}">{{ $bValue }}</option>
+                        @endforeach
+                    </select>
+                    <label class="mt-3" for='name'>
+                        Monto
+                    </label>
+                    <input type="text" name="amount" required class="form-control form-control-sm">
                     <div class='col-12 mt-4'>
                         <button class='btn btn-success btn-sm' type='submit'>Guardar</button>
                     </div>
@@ -117,7 +128,7 @@
 @push('js')
     <script>
         function editBanks(id) {
-            fetch(`/mantenice/banks/${id}/edit`, {
+            fetch(`/mantenice/bs/${id}/edit`, {
                     method: 'GET',
                     params: {
                         id: id

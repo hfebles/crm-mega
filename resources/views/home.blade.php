@@ -6,6 +6,33 @@
 
 @section('content_body')
     <div class="row">
+        <div class="col-12">
+            <h3>Bolivares ingresados {{ date('d-m-Y') }}:</h3>
+        </div>
+        @foreach ($bs as $b)
+            <div class="col-6">
+                <x-adminlte-small-box title="Inicio: {{ number_format($b->amount, 2, ',', '.') }}" text="{{ $b->name }}"
+                    icon="fas  fa-wallet text-light" theme="{{ $b->color }}" />
+            </div>
+        @endforeach
+
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h3>Bolivares restantes:</h3>
+        </div>
+        @foreach ($bs as $b)
+            <div class="col-6">
+                <x-adminlte-small-box title="Resto: {{ number_format($b->resto, 2, ',', '.') }}" text="{{ $b->name }}"
+                    icon="fas  fa-wallet text-light" theme="{{ $b->color }}" />
+            </div>
+        @endforeach
+
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h3>Transacciones:</h3>
+        </div>
         @foreach ($banks as $bank)
             <div class="col-3">
                 <x-adminlte-small-box title="{{ $bank->transfers }}" text="{{ $bank->name }}"
@@ -14,18 +41,17 @@
             </div>
         @endforeach
 
-        <div class="col-3">
-            <x-adminlte-small-box title="{{ number_format($totalBs, 2, ',', '.') }}" text="Total Bolivares"
-                icon="fas  fa-wallet text-light" theme="olive" />
-        </div>
+
     </div>
 
     <div class="row">
-        <div class="col-8"></div>
-        <div class="col-4">
+        <div class="col-12">
+            <h3>Tasas:</h3>
+        </div>
+        <div class="col-12">
             <div class="row">
                 @foreach ($rates as $rate)
-                    <div class="col-12">
+                    <div class="col-4">
 
                         <div class="small-box bg-secondary">
                             <div class="inner">

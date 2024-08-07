@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id("_id");
             $table->string("name");
             $table->tinyInteger("type");
-            $table->decimal("amount", 8, 2);
+            $table->decimal("amount", 8, 5);
             $table->tinyInteger("country");
             $table->timestamps();
         });

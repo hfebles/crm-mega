@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string("bank_account_number");
             $table->string("headline");
             $table->string("headline_dni");
-            $table->string("headline_phone");
+            $table->string("headline_phone")->nullable();
             $table->timestamps();
         });
     }

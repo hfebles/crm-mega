@@ -360,6 +360,10 @@ return [
                     'url' => 'mantenice/rates',
                 ],
                 [
+                    'text' => 'Bolivares',
+                    'url' => 'mantenice/bs',
+                ],
+                [
                     'text' => 'Usuarios',
                     'url' => '#',
                 ],

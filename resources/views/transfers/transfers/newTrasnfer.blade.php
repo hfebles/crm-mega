@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
-@section('subtitle', '')
-@section('content_header_title', '')
-@section('content_header_subtitle', 'Nuevo transferencia')
+@section('subtitle', $config['subtitle'])
+@section('content_header_title', $config['content_header_title'])
+@section('content_header_subtitle', 'Nueva transferencia')
 
 @section('content_body')
     <div class="row">
@@ -11,15 +11,16 @@
                 <div class="card-body">
                     <div class="d-flex align-items-center justify-content-between">
                         <div class="w-10">
-                            <a href="#" type="button" class="btn btn-dark btn-sm">Regresar</a>
+                            <a href="{{ $config['back'] }}" type="button" class="btn btn-dark btn-sm">
+                                <i class="fas fa-chevron-circle-left" aria-hidden="true"></i> Regresar</a>
                         </div>
                         <div class="w-80">
-                            <h3>Transferencia create</h3>
+                            <h3>Nueva transferencia</h3>
                         </div>
                         <div class="w-10">
                             <button class="btn btn-success btn-sm" type="button" data-bs-toggle="modal"
                                 data-bs-target="#staticBackdrop">
-                                Nueva cuenta
+                                <i class="fas fa-plus-circle" aria-hidden="true"></i> Nueva cuenta
                             </button>
                         </div>
                     </div>
@@ -74,8 +75,9 @@
                                     <label for="name">Tasa</label>
                                     <select required class="form-select form-select-sm" name="rate" id="rate">
                                         <option value="">Seleccione</option>
-                                        @foreach ($datas['rates'] as $kRate => $vRate)
-                                            <option value="{{ $kRate }}">{{ $vRate }}</option>
+                                        @foreach ($ratex as $vRate)
+                                            <option value="{{ $vRate['_id'] }}">{{ $vRate['name'] }} {{ $vRate['amount'] }}
+                                            </option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -95,7 +97,7 @@
 
                             <div class="col-3">
                                 <div class="form-group">
-                                    <label for="name">Importe Pesos</label>
+                                    <label for="name">Importe</label>
                                     <input required onkeypress="return soloNumeros(event);" onkeyup="calcularImporte(this);"
                                         autocomplete="off" type="text" class="form-control form-control-sm"
                                         name="client_amount" id="importe">
@@ -103,7 +105,7 @@
                             </div>
                             <div class="col-3">
                                 <div class="form-group">
-                                    <label for="name">Importe Bs</label>
+                                    <label for="name">Importe</label>
                                     <input disabled autocomplete="off" type="text" class="form-control form-control-sm"
                                         name="importe_bs" id="importe_bs">
                                 </div>
@@ -212,7 +214,6 @@
                 })
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data)
                     document.querySelector('#importe_bs').value = data.amount.toFixed(2);
                     document.querySelector('#importe_bs2').value = data.amount.toFixed(2);
 
@@ -241,7 +242,7 @@
         function soloNumeros(e) {
             key = e.keyCode || e.which;
             tecla = String.fromCharCode(key).toLowerCase();
-            letras = "1234567890.";
+            letras = "1234567890";
             especiales = [];
 
             tecla_especial = false

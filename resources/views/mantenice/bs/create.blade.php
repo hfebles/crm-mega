@@ -11,8 +11,7 @@
                 <div class="card-body">
                     <div class="d-flex align-items-center justify-content-between">
                         <div class="w-10">
-                            <a href="{{ $config['back'] }}" type="button" class="btn btn-dark btn-sm">
-                                <i class="fas fa-chevron-circle-left" aria-hidden="true"></i> Regresar</a>
+                            <a href="{{ $config['back'] }}" type="button" class="btn btn-dark btn-sm">Regresar</a>
                         </div>
                         <div class="w-80">
                             <h3>Crear nuevo banco</h3>

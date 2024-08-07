@@ -73,7 +73,7 @@ class RateController extends Controller
         // return $request;
         $rate = new Rate();
         $rate->name = strtoupper($request->name);
-        $rate->amount = $request->amount;
+        $rate->amount = self::limpiarMontos($request->amount);
         $rate->country = $request->country;
         $rate->type = 1;
         $rate->save();
@@ -88,7 +88,7 @@ class RateController extends Controller
         }
 
         if ($request->amount) {
-            $rate->amount = $request->amount;
+            $rate->amount = self::limpiarMontos($request->amount);
         }
 
         $rate->save();

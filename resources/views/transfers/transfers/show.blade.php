@@ -32,7 +32,7 @@
                 <div class="card-body">
                     <pre id="textCopy">
 
-*No. {{ str_pad($data->transferId, 8, '0', STR_PAD_LEFT) }} {{ $data->country }}{{ str_pad($data->code, 4, '0', STR_PAD_LEFT) }}*
+*No. {{ str_pad($data->transferId, 8, '0', STR_PAD_LEFT) }} ({{ $data->country }}{{ str_pad($data->code, 4, '0', STR_PAD_LEFT) }})*
 Cuenta: {{ $data->bank_account_number }}
 Titular: {{ $data->headline }}
 Cédula: {{ $data->headline_dni }}

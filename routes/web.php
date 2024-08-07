@@ -7,6 +7,7 @@ use App\Http\Controllers\Mantenice\{
     PayMethodController,
     RateController,
     RoleController,
+    TotalBsController,
     UserController
 };
 use App\Http\Controllers\Transfer\TransferController;
@@ -24,18 +25,21 @@ Route::group(['middleware' => ['auth']], function () {
     // Mantenice
     Route::resource('mantenice/roles', RoleController::class);
     Route::resource('mantenice/users', UserController::class);
+    Route::resource('mantenice/bs', TotalBsController::class);
+
+    Route::post('mantenice/bs/{id}/update-bank', [TotalBsController::class, 'updateBank'])->name('bs.update-bank');
+
+
 
     Route::resource('mantenice/banks', BankController::class);
     Route::get('/mantenice/banks/search/{id}', [BankController::class, 'searchBank'])->name('banks.search');
     Route::post('mantenice/banks/{id}/update-bank', [BankController::class, 'updateBank'])->name('banks.update-bank');
     Route::get('mantenice/banks/{id}/delete', [BankController::class, 'deleteBank'])->name('banks.delete-bank');
 
-
     Route::resource('/mantenice/pay-methods', PayMethodController::class);
     Route::post('mantenice/pay-methods/{id}/update-method', [PayMethodController::class, 'updateMethod'])->name('pay-methods.update-method');
     Route::get('mantenice/pay-methods/{id}/inactive', [PayMethodController::class, 'inactive'])->name('pay-methods.inactive');
     Route::get('mantenice/pay-methods/{id}/delete', [PayMethodController::class, 'delete'])->name('pay-methods.delete');
-
 
     Route::resource('mantenice/countries', CountryController::class);
 
@@ -53,6 +57,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('clients-accounts', ClientAccountController::class);
 
     Route::get('/clients/find-client/{id}', [ClientController::class, 'findClient'])->name('clients.find-client');
+    Route::get('/clients/delete/{id}', [ClientController::class, 'delete'])->name('clients.delete');
+
     Route::post('/clients/search', [ClientController::class, 'searchClient'])->name('clients.search');
 
 

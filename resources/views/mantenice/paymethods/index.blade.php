@@ -34,8 +34,8 @@
             <div class="card mb-0">
                 <div class="card-body mb-0">
                     <table class="table table-sm table-bordered align-middle mb-0">
-                        <thead>
-                            <tr class="text-uppercase text-center">
+                        <thead class="thead-dark text-uppercase text-center">
+                            <tr>
                                 <th width="4%">#</th>
                                 <th>Nombre</th>
                                 <th>Abreviatura</th>

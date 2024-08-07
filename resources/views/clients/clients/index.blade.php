@@ -28,65 +28,48 @@
             </div>
         </div>
     </div>
-    <div class="col-12">
-        <div class="card">
-            <div class="card-body">
-                <input type="text" placeholder="Buscar" name="search" id="search" onkeyup="search(this.value);">
-            </div>
-        </div>
-    </div>
     <div class="row">
         <div class="col-12">
             <div class="card mb-0">
                 <div class="card-body mb-0">
-                    <table class="table table-sm table-bordered align-middle mb-0">
-                        <thead>
-                            <tr class="text-uppercase text-center">
-                                <th width="4%">codigo</th>
-                                <th width="10%">dni</th>
+                    <div class="row">
+                        <div class="col-12 mb-4">
+                            <div class="row">
+                                <div class="col-6">
+                                    <input class="form-control form-control-sm" type="text" placeholder="Buscar"
+                                        name="search" id="search" onkeyup="search(this.value);">
+                                </div>
+                                <div class="col-6">
+                                    <select class="form-select form-select-sm" name="campo" id="campo">
+                                        <option value="names">Nombre</option>
+                                        <option value="code">Codigo</option>
+                                        <option value="dni">Dni</option>
+                                        <option value="phone">Telefono</option>
+                                    </select>
+                                </div>
+                            </div>
 
-                                <th>Nombre</th>
-                                <th width="10%">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody id="client-list">
-                            @include('clients.clients.partials.client_list')
-                            {{-- @if (count($datas) > 0)
-                                @foreach ($datas as $data)
-                                    <tr>
-                                        <td class="text-center">
-                                            {{ $data->country }}{{ str_pad($data->code, 4, '0', STR_PAD_LEFT) }}</td>
-                                        <td class="text-center">{{ $data->dni }}</td>
 
-                                        <td>{{ $data->names }}</td>
-                                        <td class="text-center">
-                                            <div class="btn-group" role="group" aria-label="Basic example">
-                                                <a href="{{ route('transfers.new-transfer', $data->_id) }}"
-                                                    class="btn btn-info btn-sm text-white" type="button">
-                                                    <i class="fas fa-paper-plane"></i>
-                                                </a>
-                                                <button class="btn btn-warning btn-sm" type="button" onclick=""
-                                                    data-bs-toggle="offcanvas" data-bs-target="#offcanvasExampleEdit"
-                                                    aria-controls="offcanvasExampleEdit">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-danger btn-sm"><i
-                                                        class="fas fa-trash"></i></button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            @else
-                                <tr class="text-center">
-                                    <td colspan="3">No existen bancos registrados.</td>
+                        </div>
+                        <div class="col-12">
+                            <table class="table table-sm table-bordered align-middle mb-0">
+                                <tr class="text-uppercase text-center thead-dark">
+                                    <th width="4%">codigo</th>
+                                    <th width="10%">dni</th>
+                                    <th>Nombre</th>
+                                    <th>Telefono</th>
+                                    <th width="10%">Acciones</th>
                                 </tr>
-                            @endif --}}
-                        </tbody>
-                    </table>
-                    <div id="pagination" class="col-12 mt-3 text-center ">
-                        @include('clients.clients.partials.pagination')
-                    </div>
+                                <tbody id="client-list">
+                                    @include('clients.clients.partials.client_list')
 
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="pagination" style="justify-content: flex-end" class="col-12 mt-3 mb-0 d-flex">
+                            @include('clients.clients.partials.pagination')
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -94,12 +77,14 @@
 
 @stop
 @section('plugins.Boostrap5', true)
+
 @push('js')
     <script>
         const csrfToken = "{{ csrf_token() }}";
 
         function search(value) {
-            fetch(`/clients?value=${encodeURIComponent(value)}`, {
+            var campo = document.querySelector('#campo').value;
+            fetch(`/clients?value=${encodeURIComponent(value)}&campo=${encodeURIComponent(campo)}`, {
                     method: 'GET',
                     headers: {
                         'X-Requested-With': 'XMLHttpRequest',

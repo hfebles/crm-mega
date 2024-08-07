@@ -59,13 +59,24 @@ class TransferController extends Controller
 
         $client = Client::find($id);
         $accountClient = ClientAccount::where('client_id', '=', $id)->get();
-        $rate = Rate::pluck('name', '_id');
-        $datas = ['client' => $client, 'client_account' => $accountClient, 'rates' => $rate, 'methodPays' => $methodPays];
 
-        return view('transfers.transfers.newTrasnfer', compact('datas', 'config', 'countries', 'banks'));
+        $ratex = Rate::select("r._id", "r.name", "r.amount")
+            ->from("rates as r")
+            ->join('countries as c', 'c._id', '=', 'r.country')
+            ->join('clients as cl', 'cl.country', '=', 'c.short')
+            ->where('cl._id', '=', $id)
+            ->get();
+
+
+
+
+
+
+
+        $datas = ['client' => $client, 'client_account' => $accountClient,  'methodPays' => $methodPays];
+
+        return view('transfers.transfers.newTrasnfer', compact('datas', 'config', 'countries', 'banks', 'ratex'));
     }
-
-
 
     public function create()
     {
@@ -75,11 +86,15 @@ class TransferController extends Controller
             'content_header_subtitle' => $this->subsection,
             'back' => route('transfers.index')
         ];
-        $rate = Rate::pluck('name', '_id');
+        $rate = Rate::pluck('amount', '_id');
         $clients = Client::pluck('names', '_id');
-        $methodPays = PayMethod::pluck('name', '_id');
+        $methodPays = PayMethod::where('enable', '=', 1)->pluck('name', '_id');
+        $countries = Country::pluck('name', 'short');
+        $banks = Bank::pluck('name', '_id');
+
+
         $datas = ['clients' => $clients, 'rates' => $rate, "method_pay" => $methodPays];
-        return view('transfers.transfers.create', compact('datas', 'config'));
+        return view('transfers.transfers.create', compact('datas', 'config', 'countries', 'banks'));
     }
 
 
@@ -93,12 +108,11 @@ class TransferController extends Controller
         $transfer->client_id = $request->client_id;
         $transfer->client_account_id = $request->client_account_id;
         $transfer->date = date('Y-m-d');
-        $transfer->headline_amount = $request->headline_amount;
-        $transfer->client_amount = $request->client_amount;
+        $transfer->headline_amount = self::limpiarMontos($request->headline_amount);
+        $transfer->client_amount = self::limpiarMontos($request->client_amount);
         $transfer->rate_amount = $rate;
         $transfer->bank_id = $request->bank_id;
         $transfer->pay_method_id = $request->pay_method;
-
         $transfer->save();
 
         return redirect()->route('transfers.show', $transfer->_id);
@@ -131,8 +145,6 @@ class TransferController extends Controller
             ->join("pay_methods", "pay_methods._id", "=", "transfers.pay_method_id")
             ->join("client_accounts", "client_accounts.client_id", "=", "clients._id")
             ->join("banks", "client_accounts.bank_id", "=", "banks._id")
-
-
             ->where("transfers._id", "=", $id)
             ->get()[0];
 

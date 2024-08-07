@@ -34,8 +34,8 @@
             <div class="card mb-0">
                 <div class="card-body mb-0">
                     <table class="table table-sm table-bordered align-middle mb-0">
-                        <thead>
-                            <tr class="text-uppercase text-center">
+                        <thead class="thead-dark text-uppercase text-center">
+                            <tr>
                                 <th width="4%">#</th>
                                 <th>Nombre</th>
                                 <th width="7%">Monto</th>
@@ -49,8 +49,8 @@
                                     <tr>
                                         <td class="text-center">{{ $data->_id }}</td>
                                         <td>{{ $data->name }}</td>
-                                        <td class="text-end">{{ $data->amount }}</td>
-                                        <td>{{ $data->countryName }}</td>
+                                        <td class="text-end">{{ number_format($data->amount, 5, ',', '.') }}</td>
+                                        <td class="text-center">{{ $data->countryName }}</td>
                                         <td class="text-center">
                                             <div class="btn-group " role="group" aria-label="Basic example">
                                                 <button class="btn btn-warning btn-sm" type="button"
@@ -82,7 +82,7 @@
     </div>
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
         <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Nuevo Banco</h5>
+            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Nueva Tasa</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
@@ -121,7 +121,7 @@
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExampleEdit"
         aria-labelledby="offcanvasExampleLabelEdit">
         <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Editar Banco</h5>
+            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Editar Tasa</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">

@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string("names");
             $table->string("dni");
             $table->string("phone");
+            $table->string("country");
+            $table->boolean("enable")->default(1);
             $table->timestamps();
         });
     }

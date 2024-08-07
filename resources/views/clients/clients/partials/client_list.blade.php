@@ -5,17 +5,19 @@
         <td class="text-center">{{ $data->dni }}</td>
 
         <td>{{ $data->names }}</td>
+        <td class="text-center">{{ $data->phone }}</td>
+
         <td class="text-center">
             <div class="btn-group" role="group" aria-label="Basic example">
                 <a href="{{ route('transfers.new-transfer', $data->_id) }}" class="btn btn-info btn-sm text-white"
                     type="button">
                     <i class="fas fa-paper-plane"></i>
                 </a>
-                <button class="btn btn-warning btn-sm" type="button" onclick="" data-bs-toggle="offcanvas"
-                    data-bs-target="#offcanvasExampleEdit" aria-controls="offcanvasExampleEdit">
-                    <i class="fas fa-edit"></i>
-                </button>
-                <button type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
+                <a class="btn btn-primary btn-sm text-white" href="{{ route('clients.show', $data->_id) }}">
+                    <i class="fas fa-search" aria-hidden="true"></i>
+                </a>
+                <a href="{{ route('clients.delete', $data->_id) }}" type="button" class="btn btn-danger btn-sm"><i
+                        class="fas fa-trash"></i></a>
             </div>
         </td>
     </tr>

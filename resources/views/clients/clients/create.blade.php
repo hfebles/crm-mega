@@ -33,7 +33,7 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="name">Pais</label>
-                                    <select onchange="searchCode(this.value);" class="form-control form-select-sm"
+                                    <select required onchange="searchCode(this.value);" class="form-control form-select-sm"
                                         name="country" id="country">
                                         <option value="">Seleccione</option>
                                         @foreach ($countries as $kCountry => $Vcountry)
@@ -52,22 +52,23 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="name">Nombre</label>
-                                    <input autocomplete="off" disabled type="text" class="form-control form-control-sm"
-                                        name="name" id="name">
+                                    <input required autocomplete="off" disabled type="text"
+                                        class="form-control form-control-sm" name="name" id="name">
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="name">DNI</label>
-                                    <input onkeyup="searchDNI(this)" autocomplete="off" disabled type="text"
+                                    <input required onkeyup="searchDNI(this)" autocomplete="off" disabled type="text"
                                         class="form-control form-control-sm" name="dni" id="dni">
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="name">Telefono</label>
-                                    <input onkeypress="return soloNumeros(event);" autocomplete="off" disabled
-                                        type="text" class="form-control form-control-sm" name="phone" id="phone">
+                                    <input required maxlength="11" minlength="11" onkeypress="return soloNumeros(event);"
+                                        autocomplete="off" disabled type="text" class="form-control form-control-sm"
+                                        name="phone" id="phone">
                                 </div>
                             </div>
                         </div>
@@ -80,7 +81,7 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="name">Bancos:</label>
-                                    <select class="form-control form-select-sm" name="bank_id" id="bank_id">
+                                    <select required class="form-control form-select-sm" name="bank_id" id="bank_id">
                                         <option value="">Seleccione</option>
                                         @foreach ($banks as $kBank => $VBank)
                                             <option value="{{ $kBank }}">{{ $VBank }}</option>
@@ -91,21 +92,22 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="name">Nro de cuenta:</label>
-                                    <input autocomplete="off" type="text" class="form-control form-control-sm"
-                                        name="bank_account_number" id="bank_account_number">
+                                    <input onkeypress="return soloNumeros(event);" required autocomplete="off"
+                                        type="text" class="form-control form-control-sm" name="bank_account_number"
+                                        id="bank_account_number">
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="name">Nombre del titular</label>
-                                    <input autocomplete="off" type="text" class="form-control form-control-sm"
+                                    <input required autocomplete="off" type="text" class="form-control form-control-sm"
                                         name="headline" id="headline">
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="name">DNI del titular</label>
-                                    <input autocomplete="off" type="text" class="form-control form-control-sm"
+                                    <input required autocomplete="off" type="text" class="form-control form-control-sm"
                                         name="headline_dni" id="headline_dni">
                                 </div>
                             </div>
@@ -137,6 +139,12 @@
                     document.querySelector('#name').focus()
                 })
                 .catch(error => console.error('Error:', error));
+
+            if (value === "VE") {
+                document.querySelector("#bank_account_number").setAttribute('minlength', "20");
+                document.querySelector("#bank_account_number").setAttribute('maxlength', "20");
+            }
+
         }
 
         function searchDNI(input) {
@@ -160,7 +168,7 @@
         function soloNumeros(e) {
             key = e.keyCode || e.which;
             tecla = String.fromCharCode(key).toLowerCase();
-            letras = "1234567890.";
+            letras = "1234567890";
             especiales = [];
 
             tecla_especial = false

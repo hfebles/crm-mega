@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer("pay_method_id");
             $table->decimal("headline_amount", 8, 2);
             $table->decimal("client_amount", 8, 2);
-            $table->decimal("rate_amount", 8, 2);
+            $table->decimal("rate_amount", 8, 5);
             $table->integer("bank_id");
             $table->timestamps();
         });
