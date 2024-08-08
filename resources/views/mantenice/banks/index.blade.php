@@ -19,11 +19,12 @@
                         </div>
 
                         <div class="w-10">
-
-                            <button class="btn btn-success btn-sm" type="button" data-bs-toggle="offcanvas"
-                                data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
-                                <i class="fas fa-plus-circle" aria-hidden="true"></i>
-                            </button>
+                            @can('bank-create')
+                                <button class="btn btn-success btn-sm" type="button" data-bs-toggle="offcanvas"
+                                    data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+                                    <i class="fas fa-plus-circle" aria-hidden="true"></i>
+                                </button>
+                            @endcan
                         </div>
                     </div>
                 </div>
@@ -50,14 +51,18 @@
                                         <td>{{ $data->name }}</td>
                                         <td class="text-center">
                                             <div class="btn-group" role="group" aria-label="Basic example">
-                                                <button class="btn btn-warning btn-sm" type="button"
-                                                    onclick="editBanks({{ $data->_id }})" data-bs-toggle="offcanvas"
-                                                    data-bs-target="#offcanvasExampleEdit"
-                                                    aria-controls="offcanvasExampleEdit">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
-                                                <a href="{{ route('banks.delete-bank', $data->_id) }}" type="button"
-                                                    class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
+                                                @can('bank-edit')
+                                                    <button class="btn btn-warning btn-sm" type="button"
+                                                        onclick="editBanks({{ $data->_id }})" data-bs-toggle="offcanvas"
+                                                        data-bs-target="#offcanvasExampleEdit"
+                                                        aria-controls="offcanvasExampleEdit">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+                                                @endcan
+                                                @can('bank-delete')
+                                                    <a href="{{ route('banks.delete-bank', $data->_id) }}" type="button"
+                                                        class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
+                                                @endcan
                                             </div>
                                         </td>
                                     </tr>

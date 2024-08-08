@@ -19,10 +19,12 @@
                         </div>
 
                         <div class="w-10">
-                            <button class="btn btn-success btn-sm" type="button" data-bs-toggle="offcanvas"
-                                data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
-                                <i class="fas fa-plus-circle" aria-hidden="true"></i>
-                            </button>
+                            @can('method-create')
+                                <button class="btn btn-success btn-sm" type="button" data-bs-toggle="offcanvas"
+                                    data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+                                    <i class="fas fa-plus-circle" aria-hidden="true"></i>
+                                </button>
+                            @endcan
                         </div>
                     </div>
                 </div>
@@ -64,29 +66,32 @@
                                         </td>
                                         <td class="text-center">
                                             <div class="btn-group" role="group" aria-label="Basic example">
-                                                <button class="btn btn-warning btn-sm" type="button"
-                                                    onclick="editBanks({{ $data->_id }})" data-bs-toggle="offcanvas"
-                                                    data-bs-target="#offcanvasExampleEdit"
-                                                    aria-controls="offcanvasExampleEdit">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
-                                                @if ($data->enable == 1)
-                                                    <a href="{{ route('pay-methods.inactive', $data->_id) }}" type="button"
-                                                        class="btn btn-danger btn-sm"><i class="fas fa-times"></i></a>
-                                                @else
-                                                    <a href="{{ route('pay-methods.inactive', $data->_id) }}" type="button"
-                                                        class="btn btn-success btn-sm"><i class="fas fa-check"></i></a>
-                                                @endif
-                                                <a href="{{ route('pay-methods.delete', $data->_id) }}" type="button"
-                                                    class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
-
+                                                @can('method-edit')
+                                                    <button class="btn btn-warning btn-sm" type="button"
+                                                        onclick="editBanks({{ $data->_id }})" data-bs-toggle="offcanvas"
+                                                        data-bs-target="#offcanvasExampleEdit"
+                                                        aria-controls="offcanvasExampleEdit">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+                                                @endcan
+                                                @can('method-delete')
+                                                    @if ($data->enable == 1)
+                                                        <a href="{{ route('pay-methods.inactive', $data->_id) }}" type="button"
+                                                            class="btn btn-danger btn-sm"><i class="fas fa-times"></i></a>
+                                                    @else
+                                                        <a href="{{ route('pay-methods.inactive', $data->_id) }}" type="button"
+                                                            class="btn btn-success btn-sm"><i class="fas fa-check"></i></a>
+                                                    @endif
+                                                    <a href="{{ route('pay-methods.delete', $data->_id) }}" type="button"
+                                                        class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
+                                                @endcan
                                             </div>
                                         </td>
                                     </tr>
                                 @endforeach
                             @else
                                 <tr class="text-center">
-                                    <td colspan="3">No existen bancos registrados.</td>
+                                    <td colspan="5">No existen registros.</td>
                                 </tr>
                             @endif
                         </tbody>

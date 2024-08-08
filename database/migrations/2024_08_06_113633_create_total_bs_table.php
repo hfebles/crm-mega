@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('total_bs', function (Blueprint $table) {
             $table->id("_id");
-            $table->decimal("amount", 8, 5);
+            $table->decimal("amount", 20, 5);
             $table->integer('bank_id');
             $table->timestamps();
         });

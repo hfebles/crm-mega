@@ -11,9 +11,6 @@ use App\Models\Mantenice\PayMethod;
 use App\Models\Mantenice\Rate;
 use App\Models\Transfer\Transfer;
 use Illuminate\Http\Request;
-use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
 use App\Exports\TransfersExport;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -21,6 +18,14 @@ class TransferController extends Controller
 {
     protected $section = "Transaferencias";
     protected $subsection = "Transaferencias";
+
+    function __construct()
+    {
+        $this->middleware('permission:transfer-list', ['only' => ['index', 'show']]);
+        $this->middleware('permission:transfer-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:transfer-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:transfer-delete', ['only' => ['destroy']]);
+    }
     public function index(Request $request)
     {
         $config = [

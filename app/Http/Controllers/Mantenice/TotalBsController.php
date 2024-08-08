@@ -14,6 +14,14 @@ class TotalBsController extends Controller
     protected $section = "Configuraciones";
     protected $subsection = "Total bolivares";
 
+    function __construct()
+    {
+        $this->middleware('permission:bs-list', ['only' => ['index', 'show']]);
+        $this->middleware('permission:bs-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:bs-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:bs-delete', ['only' => ['destroy']]);
+    }
+
     public function index()
     {
         $config = [

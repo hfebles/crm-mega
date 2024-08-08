@@ -61,10 +61,12 @@
                             <div class="icon">
                                 <i class="fas  fa-percent text-light"></i>
                             </div>
-                            <a onclick="openModal({{ $rate->_id }})" href="#" class="small-box-footer">
-                                Actualizar
-                                <i class="fas fa-lg fa-arrow-circle-right"></i>
-                            </a>
+                            @can('rate-edit')
+                                <a onclick="openModal({{ $rate->_id }})" href="#" class="small-box-footer">
+                                    Actualizar
+                                    <i class="fas fa-lg fa-arrow-circle-right"></i>
+                                </a>
+                            @endcan
                             <div class="overlay d-none">
                                 <i class="fas fa-2x fa-spin fa-sync-alt text-gray"></i>
                             </div>

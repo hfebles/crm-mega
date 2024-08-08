@@ -327,6 +327,7 @@ return [
             'text' => 'Clientes',
             'url' => 'clients',
             'icon' => 'fas fa-fw fa-user',
+            'can' => 'client-list',
         ],
 
 
@@ -335,12 +336,13 @@ return [
             'text' => 'Transferencias',
             'icon' => 'fas fa-money-check-alt',
             'url' => 'transfers',
+            'can' => 'transfer-list',
         ],
         [
             'text' => 'Nueva Transferencia',
             'icon' => "fas fa-paper-plane",
-
             'url' => 'transfers/create',
+            'can' => 'transfer-create',
         ],
         ['header' => 'Mantenimentos'],
         [
@@ -350,22 +352,32 @@ return [
                 [
                     'text' => 'Bancos',
                     'url' => 'mantenice/banks',
+                    'can' => 'bank-list',
                 ],
                 [
                     'text' => 'Metodos de pago',
                     'url' => 'mantenice/pay-methods',
+                    'can' => 'method-list',
                 ],
                 [
                     'text' => 'Tasas',
                     'url' => 'mantenice/rates',
+                    'can' => 'rate-list',
                 ],
                 [
                     'text' => 'Bolivares',
                     'url' => 'mantenice/bs',
+                    'can' => 'bs-list',
                 ],
                 [
                     'text' => 'Usuarios',
-                    'url' => '#',
+                    'url' => 'mantenice/users',
+                    'can' => 'user-list',
+                ],
+                [
+                    'text' => 'Grupo de usuario',
+                    'url' => 'mantenice/roles',
+                    'can' => 'role-list',
                 ],
                 // [
                 //     'text' => 'level_one',

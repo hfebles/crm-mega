@@ -11,6 +11,14 @@ class BankController extends Controller
     protected $section = "Configuraciones";
     protected $subsection = "Tasas";
 
+    function __construct()
+    {
+        $this->middleware('permission:bank-list', ['only' => ['index', 'show']]);
+        $this->middleware('permission:bank-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:bank-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:bank-delete', ['only' => ['destroy']]);
+    }
+
     public function index()
     {
         $config = [

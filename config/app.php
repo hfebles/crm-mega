@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'https://mega.hfebles.com'),
+    'url' => env('APP_URL', 'https://crm-mega.hfebles.com'),
 
     /*
     |--------------------------------------------------------------------------

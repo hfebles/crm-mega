@@ -35,7 +35,8 @@ class ClientController extends Controller
 
         $query->where('enable', 1);
 
-        $datas = $query->paginate(1);
+        $datas = $query->paginate(20);
+
 
         if ($request->ajax()) {
             return response()->json([
@@ -180,8 +181,9 @@ class ClientController extends Controller
             ->orderBy('t._id', 'DESC')
             ->where("t.client_id", $id)
             ->get();
-
-        return view('clients.clients.show', compact('client', 'config', 'clientAccounts', 'transfers'));
+        // Bancos: 
+        $banks = Bank::pluck('name', '_id');
+        return view('clients.clients.show', compact('client', 'config', 'clientAccounts', 'transfers', 'banks'));
     }
     public function update(Request $request, $id)
     {

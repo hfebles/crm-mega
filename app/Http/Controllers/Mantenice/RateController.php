@@ -13,6 +13,14 @@ class RateController extends Controller
     protected $section = "Configuraciones";
     protected $subsection = "Tasas";
 
+    function __construct()
+    {
+        $this->middleware('permission:rate-list', ['only' => ['index', 'show']]);
+        $this->middleware('permission:rate-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:rate-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:rate-delete', ['only' => ['destroy']]);
+    }
+
     public function index()
     {
         $config = [

@@ -19,9 +19,11 @@
                         </div>
 
                         <div class="w-10">
-                            <a class="btn btn-success btn-sm" type="button" href="{{ route('clients.create') }}">
-                                <i class="fas fa-plus-circle" aria-hidden="true"></i>
-                            </a>
+                            @can('client-create')
+                                <a class="btn btn-success btn-sm" type="button" href="{{ route('clients.create') }}">
+                                    <i class="fas fa-plus-circle" aria-hidden="true"></i>
+                                </a>
+                            @endcan
                         </div>
                     </div>
                 </div>
@@ -62,7 +64,6 @@
                                 </tr>
                                 <tbody id="client-list">
                                     @include('clients.clients.partials.client_list')
-
                                 </tbody>
                             </table>
                         </div>

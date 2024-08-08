@@ -55,14 +55,15 @@ Route::group(['middleware' => ['auth']], function () {
     // Clients
     Route::resource('/clients', ClientController::class);
     Route::resource('/clients-accounts', ClientAccountController::class);
+    Route::get('/clients-accounts/edit-account/{id}', [ClientAccountController::class, 'editClientAccount'])->name('clients-accounts.edit-account');
+
+
 
     Route::get('/clients/find-client/{id}', [ClientController::class, 'findClient'])->name('clients.find-client');
     Route::get('/clients/delete/{id}', [ClientController::class, 'delete'])->name('clients.delete');
 
     Route::post('/clients/search', [ClientController::class, 'searchClient'])->name('clients.search');
 
-
-    Route::resource('clients/accounts', ClientAccountController::class);
 
 
     Route::get('/clients/search-code/{country}', [ClientController::class, 'searchCode'])->name('clients.search-code');

@@ -15,6 +15,14 @@ class PayMethodController extends Controller
     protected $subsection = "Metodos de pagos";
     protected $prefix = 'pay-methods';
 
+    function __construct()
+    {
+        $this->middleware('permission:method-list', ['only' => ['index', 'show']]);
+        $this->middleware('permission:method-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:method-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:method-delete', ['only' => ['destroy']]);
+    }
+
     protected $routes = [
         'index' => "index",
         'create' => "create",
@@ -40,19 +48,6 @@ class PayMethodController extends Controller
         $datas = PayMethod::paginate(10);
         return view('mantenice.paymethods.index', compact('config', 'datas'));
     }
-
-
-    // public function create()
-    // {
-    //     $config = [
-    //         'subtitle' => $this->subsection,
-    //         'content_header_title' => $this->section,
-    //         'content_header_subtitle' => "Crear Banco",
-    //         'back' => route('banks.index'),
-    //     ];
-    //     return view('mantenice.banks.create', compact('config'));
-    // }
-
 
 
     public function store(Request $request)

@@ -47,10 +47,11 @@ class HomeController extends Controller
             ->where('tbs.created_at', '>=', date('y-m-d') . " 00:00:00")
             ->get();
 
-
-        for ($i = 0; $i < count($bs); $i++) {
-            if ($bs[$i]['bank_id'] == $tBs[$i]['bank_id']) {
-                $bs[$i]['resto'] = $bs[$i]['amount'] - $tBs[$i]['total'];
+        if (count($tBs) > 0) {
+            for ($i = 0; $i < count($bs); $i++) {
+                if ($bs[$i]['bank_id'] == $tBs[$i]['bank_id']) {
+                    $bs[$i]['resto'] = $bs[$i]['amount'] - $tBs[$i]['total'];
+                }
             }
         }
 
@@ -62,6 +63,10 @@ class HomeController extends Controller
 
         if (count($rates) <= 0) {
             return redirect()->route('rates.index');
+        }
+
+        if (count($bs) <= 0) {
+            return redirect()->route('bs.index');
         }
         return view('home', compact('banks', 'rates', 'bs'));
     }

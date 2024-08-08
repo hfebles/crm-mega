@@ -19,11 +19,12 @@
                         </div>
 
                         <div class="w-10">
-
-                            <button class="btn btn-success btn-sm" type="button" data-bs-toggle="offcanvas"
-                                data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
-                                <i class="fas fa-plus-circle" aria-hidden="true"></i>
-                            </button>
+                            @can('bs-create')
+                                <button class="btn btn-success btn-sm" type="button" data-bs-toggle="offcanvas"
+                                    data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+                                    <i class="fas fa-plus-circle" aria-hidden="true"></i>
+                                </button>
+                            @endcan
                         </div>
                     </div>
                 </div>
@@ -58,13 +59,14 @@
                                         <td class="text-center">{{ date('d-m-Y', strtotime($data->created_at)) }}</td>
                                         <td class="text-center">
                                             <div class="btn-group" role="group" aria-label="Basic example">
-                                                <button class="btn btn-warning btn-sm" type="button"
-                                                    onclick="editBanks({{ $data->_id }})" data-bs-toggle="offcanvas"
-                                                    data-bs-target="#offcanvasExampleEdit"
-                                                    aria-controls="offcanvasExampleEdit">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
-
+                                                @can('bs-create')
+                                                    <button class="btn btn-warning btn-sm" type="button"
+                                                        onclick="editBanks({{ $data->_id }})" data-bs-toggle="offcanvas"
+                                                        data-bs-target="#offcanvasExampleEdit"
+                                                        aria-controls="offcanvasExampleEdit">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+                                                @endcan
                                             </div>
                                         </td>
                                     </tr>

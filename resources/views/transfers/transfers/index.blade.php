@@ -18,9 +18,11 @@
                             <h3>Lista de Operaciones</h3>
                         </div>
                         <div class="w-10">
-                            <a class="btn btn-success btn-sm" type="button" href="{{ $config['create'] }}">
-                                <i class="fas fa-plus-circle" aria-hidden="true"></i>
-                            </a>
+                            @can('transfer-create')
+                                <a class="btn btn-success btn-sm" type="button" href="{{ $config['create'] }}">
+                                    <i class="fas fa-plus-circle" aria-hidden="true"></i>
+                                </a>
+                            @endcan
                         </div>
                     </div>
                 </div>
@@ -72,7 +74,7 @@
                                 @endforeach
                             @else
                                 <tr class="text-center">
-                                    <td colspan="3">No existen bancos registrados.</td>
+                                    <td colspan="6">No existen registros.</td>
                                 </tr>
                             @endif
                         </tbody>
