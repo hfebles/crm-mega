@@ -126,7 +126,9 @@
                         @foreach ($transfers as $transfer)
                             <tr class="text-uppercase">
                                 <td class="text-center">{{ date('d/m/Y', strtotime($transfer->date)) }}</td>
-                                <td class="text-center">{{ str_pad($transfer->_id, 8, '0', STR_PAD_LEFT) }}</td>
+                                <td class="text-center"><a
+                                        href="{{ route('transfers.show', $transfer->_id) }}">{{ str_pad($transfer->_id, 8, '0', STR_PAD_LEFT) }}</a>
+                                </td>
                                 <td class="text-right">
                                     ${{ number_format($transfer->client_amount, 2, ',', '.') }}
                                 </td>
