@@ -49,11 +49,11 @@ Titular: {{ $data->headline }}
 Cédula: {{ $data->headline_dni }}
 Banco: {{ $data->bankName }}
 @if ($data->country == 'VE')
-Valor: {{ $data->headline_amount }} Bss. 🇻🇪
-Env&iacute;a: ${{ $data->client_amount }} Ars. 🇦🇷
+Valor: {{ number_format($data->headline_amount, 0, '', '.') }} Bss. 🇻🇪
+Env&iacute;a: ${{ number_format($data->client_amount, 0, '', '.') }} Ars. 🇦🇷
 @else
-Env&iacute;a: ${{ $data->headline_amount }} 🇦🇷
-Recibe: ${{ $data->client_amount }} Pesos. 🇨🇴
+Env&iacute;a: ${{ number_format($data->headline_amount, 0, '', '.') }} 🇦🇷
+Recibe: ${{ number_format($data->client_amount, 0, '', '.') }} Pesos. 🇨🇴
 @endif
 *_V&iacute;a: {{ $data->payment_name }}_*
 @endif
