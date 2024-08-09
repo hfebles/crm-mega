@@ -40,6 +40,14 @@ class RateController extends Controller
     public function edit($id)
     {
         $data = Rate::find($id);
+        $tipo = '';
+
+        if ($data->type == 1) {
+            $tipo = "Envio";
+        } else {
+            $tipo = "Recibe";
+        }
+
 
         $response = "
         <form method='POST' action=" . route('rates.update-rate', $id) . ">
@@ -58,6 +66,14 @@ class RateController extends Controller
                     <div class='input-group'>
                         <input class='form-control form-control-sm' required name='amount' placeholder='Valor de la tasa' value='" . $data->amount . "' />
                     </div>
+                    <label for='name'>
+                        Tipo de tasa
+                    </label>
+                    <select class='form-select form-select-sm ' name='type' id='type'>
+                     <option value='" . $data->type . "'>" . $tipo . "</option>
+                        <option value='1'>Envio</option>
+                        <option value='2'>Recibe</option>
+                    </select>
                     <input type='hidden' name='site' value='true'/>
                     <div class='col-12 mt-4'>
                         <button class='btn btn-success btn-sm' type='submit'>Guardar</button>
@@ -83,7 +99,7 @@ class RateController extends Controller
         $rate->name = strtoupper($request->name);
         $rate->amount = self::limpiarMontos($request->amount);
         $rate->country = $request->country;
-        $rate->type = 1;
+        $rate->type = $request->type;
         $rate->save();
         return back();
     }
@@ -97,6 +113,10 @@ class RateController extends Controller
 
         if ($request->amount) {
             $rate->amount = self::limpiarMontos($request->amount);
+        }
+
+        if ($request->type) {
+            $rate->type = strtoupper($request->type);
         }
 
         $rate->save();

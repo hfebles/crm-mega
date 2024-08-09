@@ -65,17 +65,7 @@ class TransferController extends Controller
         $client = Client::find($id);
         $accountClient = ClientAccount::where('client_id', '=', $id)->get();
 
-        $ratex = Rate::select("r._id", "r.name", "r.amount")
-            ->from("rates as r")
-            ->join('countries as c', 'c._id', '=', 'r.country')
-            ->join('clients as cl', 'cl.country', '=', 'c.short')
-            ->where('cl._id', '=', $id)
-            ->get();
-
-
-
-
-
+        $ratex = Rate::pluck('amount', '_id');
 
 
         $datas = ['client' => $client, 'client_account' => $accountClient,  'methodPays' => $methodPays];
@@ -106,19 +96,22 @@ class TransferController extends Controller
 
     public function store(Request $request)
     {
-        // return $request;
-        $rate = Rate::find($request->rate)->amount;
-
+        $rate = Rate::select('amount', 'type')->find($request->rate);
+        $rate->type;
         $transfer = new Transfer();
         $transfer->client_id = $request->client_id;
         $transfer->client_account_id = $request->client_account_id;
         $transfer->date = date('Y-m-d');
         $transfer->headline_amount = self::limpiarMontos($request->headline_amount);
         $transfer->client_amount = self::limpiarMontos($request->client_amount);
-        $transfer->rate_amount = $rate;
+        $transfer->rate_amount = $rate->amount;
+        $transfer->rate_type = $rate->type;
         $transfer->bank_id = $request->bank_id;
         $transfer->pay_method_id = $request->pay_method;
         $transfer->save();
+
+
+
 
         return redirect()->route('transfers.show', $transfer->_id);
     }
@@ -150,8 +143,9 @@ class TransferController extends Controller
             ->join("pay_methods", "pay_methods._id", "=", "transfers.pay_method_id")
             ->join("client_accounts", "client_accounts.client_id", "=", "clients._id")
             ->join("banks", "client_accounts.bank_id", "=", "banks._id")
-            ->where("transfers._id", "=", $id)
-            ->get()[0];
+            // ->where("transfers._id", "=", $id)
+            // ->get()[0];
+            ->find($id);
 
         return view('transfers.transfers.show', compact('data', 'config'));
     }
@@ -190,7 +184,5 @@ class TransferController extends Controller
     }
 
 
-    public function export()
-    {
-    }
+    public function export() {}
 }

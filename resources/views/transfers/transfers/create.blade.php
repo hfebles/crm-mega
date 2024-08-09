@@ -11,7 +11,8 @@
                 <div class="card-body">
                     <div class="d-flex align-items-center justify-content-between">
                         <div class="w-10">
-                            <a href="{{ $config['back'] }}" type="button" class="btn btn-dark btn-sm">Regresar</a>
+                            <a href="{{ $config['back'] }}" type="button" class="btn btn-dark btn-sm"><i
+                                    class="fas fa-chevron-circle-left" aria-hidden="true"></i> Regresar</a>
                         </div>
                         <div class="w-80">
                             <h3>Nueva transferencia</h3>
@@ -85,11 +86,11 @@
                             <div class="col-3">
                                 <div class="form-group">
                                     <label for="name">Tasa</label>
-                                    <select class="form-select form-select-sm" disabled name="rate" id="rates">
+                                    <select class="form-select form-select-sm" name="rate" id="rates">
                                         <option value="">Seleccione</option>
-                                        {{-- @foreach ($datas['rates'] as $kRate => $vRate)
+                                        @foreach ($datas['rates'] as $kRate => $vRate)
                                             <option value="{{ $kRate }}">{{ $vRate }}</option>
-                                        @endforeach --}}
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -108,14 +109,14 @@
 
                             <div class="col-3">
                                 <div class="form-group">
-                                    <label for="name">Importe Pesos</label>
+                                    <label for="name">Importe Envio</label>
                                     <input onkeyup="calcularImporte(this.value);" autocomplete="off" type="text"
                                         class="form-control form-control-sm" name="client_amount" id="importe">
                                 </div>
                             </div>
                             <div class="col-3">
                                 <div class="form-group">
-                                    <label for="name">Importe Bs</label>
+                                    <label for="name">Importe Recibe</label>
                                     <input disabled autocomplete="off" type="text" class="form-control form-control-sm"
                                         name="importe_bs" id="importe_bs">
                                 </div>
@@ -185,6 +186,13 @@
                                     <input required maxlength="11" minlength="11" onkeypress="return soloNumeros(event);"
                                         autocomplete="off" disabled type="text" class="form-control form-control-sm"
                                         name="phone" id="phone">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="name">Cedula</label>
+                                    <input onkeypress="return soloNumeros(event);" autocomplete="off" type="text"
+                                        class="form-control form-control-sm" name="cedula" id="cedula">
                                 </div>
                             </div>
                             <div class="clearfix"></div>
@@ -269,14 +277,10 @@
                         lines += `<option value="${accounts[i]._id}">${accounts[i].bank_account_number}</option>`;
                     }
                     var lines2 = '<option value="">Seleccione</option>';
-                    for (let o in data.rates) {
-                        lines2 +=
-                            `<option value="${data.rates[o]._id}">${data.rates[o].name} - ${data.rates[o].amount}</option>`;
-                    }
+
                     document.querySelector('#client_account_id').disabled = false
                     document.querySelector('#client_account_id').innerHTML = lines;
-                    document.querySelector('#rates').disabled = false
-                    document.querySelector('#rates').innerHTML = lines2;
+
 
                 })
                 .catch(error => console.error('Error:', error));
@@ -297,9 +301,8 @@
                 })
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data)
-                    document.querySelector('#importe_bs').value = data.amount.toFixed(3);
-                    document.querySelector('#importe_bs2').value = data.amount.toFixed(3);
+                    document.querySelector('#importe_bs').value = data.amount.toFixed(0);
+                    document.querySelector('#importe_bs2').value = data.amount.toFixed(0);
 
                 })
                 .catch(error => console.error('Error:', error));

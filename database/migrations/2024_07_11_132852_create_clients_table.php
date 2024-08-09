@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string("code");
             $table->string("names");
             $table->string("dni");
+            $table->string("cedula");
             $table->string("phone");
             $table->string("country");
             $table->boolean("enable")->default(1);

@@ -2,7 +2,7 @@
 
 @section('subtitle', $config['subtitle'])
 @section('content_header_title', $config['content_header_title'])
-@section('content_header_subtitle', 'Nueva transferencia')
+@section('content_header_subtitle', 'Transferencia')
 
 @section('content_body')
     <div class="row">
@@ -11,14 +11,16 @@
                 <div class="card-body">
                     <div class="d-flex align-items-center justify-content-between">
                         <div class="w-10">
-                            <a href="{{ $config['back'] }}" type="button" class="btn btn-dark btn-sm">Regresar</a>
+                            <a href="{{ $config['back'] }}" type="button" class="btn btn-dark btn-sm"><i
+                                    class="fas fa-chevron-circle-left" aria-hidden="true"></i> Regresar</a>
                         </div>
                         <div class="w-80">
                             <h3>Transferencia {{ str_pad($data->transferId, 8, '0', STR_PAD_LEFT) }}</h3>
                         </div>
                         <div class="w-10">
                             <a target="_blank" href="{{ route('transfers.print-invoice', $data->transferId) }}"
-                                type="button" class="btn btn-info btn-sm">Imprimir</a>
+                                type="button" class="btn btn-info btn-sm"> <i class="fas fa-print" aria-hidden="true"></i>
+                                Imprimir</a>
 
                         </div>
                     </div>
@@ -32,15 +34,29 @@
                 <div class="card-body">
                     <pre id="textCopy">
 
+                        @if ($data->rate_type == 2)
+*No. {{ str_pad($data->transferId, 8, '0', STR_PAD_LEFT) }} ({{ $data->country }}{{ str_pad($data->code, 4, '0', STR_PAD_LEFT) }})*
+CBU: {{ $data->bank_account_number }}
+Titular: {{ $data->headline }}
+Banco: {{ $data->bankName }}
+Env&iacute;a: ${{ $data->headline_amount }} 🇨🇴
+Recibe: ${{ $data->client_amount }} 🇦🇷
+*_V&iacute;a: {{ $data->payment_name }}_*
+@else
 *No. {{ str_pad($data->transferId, 8, '0', STR_PAD_LEFT) }} ({{ $data->country }}{{ str_pad($data->code, 4, '0', STR_PAD_LEFT) }})*
 Cuenta: {{ $data->bank_account_number }}
 Titular: {{ $data->headline }}
 Cédula: {{ $data->headline_dni }}
 Banco: {{ $data->bankName }}
-Tel&eacute;fono: {{ $data->headline_phone }}
-*Valor: {{ $data->headline_amount }}Bss.*
-Pago ${{ $data->client_amount }} Pesos.
-*_Forma: {{ $data->payment_name }}_*
+@if ($data->country == 'VE')
+Valor: {{ $data->headline_amount }} Bss. 🇻🇪
+Env&iacute;a: ${{ $data->client_amount }} Ars. 🇦🇷
+@else
+Env&iacute;a: ${{ $data->headline_amount }} 🇦🇷
+Recibe: ${{ $data->client_amount }} Pesos. 🇨🇴
+@endif
+*_V&iacute;a: {{ $data->payment_name }}_*
+@endif
 </pre>
                     <button class="btn btn-success" onclick="copiarTexto()">Copiar</button>
 

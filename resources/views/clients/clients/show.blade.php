@@ -58,6 +58,10 @@
                             <td>{{ $client->dni }}</td>
                         </tr>
                         <tr class="text-uppercase ">
+                            <td>Cedula</td>
+                            <td>{{ $client->cedula }}</td>
+                        </tr>
+                        <tr class="text-uppercase ">
                             <td>Telefono</td>
                             <td>{{ $client->phone }}</td>
                         </tr>

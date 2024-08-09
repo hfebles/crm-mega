@@ -95,9 +95,9 @@ class ClientController extends Controller
         $client->names = strtoupper($request->name);
         $client->country = strtoupper($request->country);
         $client->code = strtoupper($request->code);
-
         $client->phone = strtoupper($request->phone);
         $client->dni = strtoupper($request->dni);
+        $client->cedula = strtoupper($request->cedula);
         $client->save();
 
         $clientId = $client->_id;
@@ -126,15 +126,17 @@ class ClientController extends Controller
             'back' => route('clients.index'),
         ];
         $client = Client::select(
-            'clients._id',
-            'clients.code',
-            'clients.names',
-            'clients.dni',
-            'clients.phone',
-            'clients.country',
+            'cl._id',
+            'cl.code',
+            'cl.names',
+            'cl.dni',
+            'cl.phone',
+            'cl.country',
+            'cl.cedula',
             'c.name as country_name',
         )
-            ->join('countries as c', 'c.short', '=', 'clients.country')
+            ->from('clients as cl')
+            ->join('countries as c', 'c.short', '=', 'cl.country')
             ->find($id);
 
         // Paises:
@@ -193,6 +195,7 @@ class ClientController extends Controller
         $client->code = strtoupper($request->code);
         $client->phone = strtoupper($request->phone);
         $client->dni = strtoupper($request->dni);
+        $client->cedula = strtoupper($request->cedula);
         $client->save();
         return redirect()->route('clients.show', $id);
     }

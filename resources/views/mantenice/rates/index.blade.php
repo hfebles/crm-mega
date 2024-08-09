@@ -117,6 +117,13 @@
                             <option value="{{ $kContry }}">{{ $vContry }}</option>
                         @endforeach
                     </select>
+                    <label for='name'>
+                        Tipo de tasa
+                    </label>
+                    <select class="form-select form-select-sm" name="type" id="type">
+                        <option value="1">Envio</option>
+                        <option value="2">Recibe</option>
+                    </select>
                     <div class='col-12 mt-4'>
                         <button class='btn btn-success btn-sm' type='submit'>Guardar</button>
                     </div>

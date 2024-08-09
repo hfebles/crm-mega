@@ -75,8 +75,8 @@
                                     <label for="name">Tasa</label>
                                     <select required class="form-select form-select-sm" name="rate" id="rate">
                                         <option value="">Seleccione</option>
-                                        @foreach ($ratex as $vRate)
-                                            <option value="{{ $vRate['_id'] }}">{{ $vRate['name'] }} {{ $vRate['amount'] }}
+                                        @foreach ($ratex as $kRate => $vRate)
+                                            <option value="{{ $kRate }}">{{ $vRate }}
                                             </option>
                                         @endforeach
                                     </select>
