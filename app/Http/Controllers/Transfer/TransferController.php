@@ -96,8 +96,8 @@ class TransferController extends Controller
 
     public function store(Request $request)
     {
+        return $request;
         $rate = Rate::select('amount', 'type')->find($request->rate);
-        $rate->type;
         $transfer = new Transfer();
         $transfer->client_id = $request->client_id;
         $transfer->client_account_id = $request->client_account_id;
@@ -141,10 +141,10 @@ class TransferController extends Controller
         )
             ->join("clients", "clients._id", "=", "transfers.client_id")
             ->join("pay_methods", "pay_methods._id", "=", "transfers.pay_method_id")
-            ->join("client_accounts", "client_accounts.client_id", "=", "clients._id")
+            ->join("client_accounts", "client_accounts._id", "=", "transfers.client_account_id")
             ->join("banks", "client_accounts.bank_id", "=", "banks._id")
-            // ->where("transfers._id", "=", $id)
-            // ->get()[0];
+            ->where("transfers._id", "=", $id)
+            // ->get();
             ->find($id);
 
         return view('transfers.transfers.show', compact('data', 'config'));

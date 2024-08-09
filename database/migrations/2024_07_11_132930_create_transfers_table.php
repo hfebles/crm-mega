@@ -20,6 +20,7 @@ return new class extends Migration
             $table->decimal("headline_amount", 20, 2);
             $table->decimal("client_amount", 20, 2);
             $table->decimal("rate_amount", 20, 5);
+            $table->decimal("rate_type", 20, 5);
             $table->integer("bank_id");
             $table->timestamps();
         });
