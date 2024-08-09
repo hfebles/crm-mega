@@ -96,7 +96,7 @@ class TransferController extends Controller
 
     public function store(Request $request)
     {
-        return $request;
+        // return $request;
         $rate = Rate::select('amount', 'type')->find($request->rate);
         $transfer = new Transfer();
         $transfer->client_id = $request->client_id;
