@@ -126,17 +126,16 @@ class ClientController extends Controller
             'back' => route('clients.index'),
         ];
         $client = Client::select(
-            'cl._id',
-            'cl.code',
-            'cl.names',
-            'cl.dni',
-            'cl.phone',
-            'cl.country',
-            'cl.cedula',
+            'clients._id',
+            'clients.code',
+            'clients.names',
+            'clients.dni',
+            'clients.phone',
+            'clients.country',
+            'clients.cedula',
             'c.name as country_name',
         )
-            ->from('clients as cl')
-            ->join('countries as c', 'c.short', '=', 'cl.country')
+            ->join('countries as c', 'c.short', '=', 'clients.country')
             ->find($id);
 
         // Paises:

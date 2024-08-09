@@ -11,7 +11,8 @@
                 <div class="card-body">
                     <div class="d-flex align-items-center justify-content-between">
                         <div class="w-10">
-                            <a href="{{ $config['back'] }}" type="button" class="btn btn-dark btn-sm">Regresar</a>
+                            <a href="{{ $config['back'] }}" type="button" class="btn btn-dark btn-sm"><i
+                                    class="fas fa-chevron-circle-left" aria-hidden="true"></i> Regresar</a>
                         </div>
                         <div class="w-80">
                             <h3>Editar cliente</h3>
@@ -62,7 +63,7 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="name">DNI</label>
-                                    <input required required value="{{ $client->dni }}" onkeyup="searchDNI(this)"
+                                    <input required value="{{ $client->dni }}" onkeyup="searchDNI(this)"
                                         autocomplete="off" type="text" class="form-control form-control-sm"
                                         name="dni" id="dni">
                                 </div>
@@ -73,6 +74,13 @@
                                     <input required value="{{ $client->phone }}" required maxlength="11" minlength="11"
                                         onkeypress="return soloNumeros(event);" autocomplete="off" type="text"
                                         class="form-control form-control-sm" name="phone" id="phone">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="name">Cedula</label>
+                                    <input value="{{ $client->cedula }}" onkeyup="searchDNI(this)" autocomplete="off"
+                                        type="text" class="form-control form-control-sm" name="dni" id="dni">
                                 </div>
                             </div>
                         </div>

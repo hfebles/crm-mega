@@ -114,17 +114,19 @@
                 <div class="card-body">
                     <table class="table table-sm table-bordered mb-0">
                         <tr class="text-uppercase bg-dark text-center">
-                            <td width=10%>Fecha</td>
-                            <td width=15%>Importe</td>
-                            <td width=7%>Tasa</td>
+                            <td width=8%>Fecha</td>
+                            <td width="10%">Operacion</td>
+                            <td width=9%>Enviado</td>
+                            <td width=5%>Tasa</td>
                             <td>Titular</td>
                             <td>Nro. Cuenta</td>
-                            <td width=15%>Importe recibido</td>
+                            <td width=9%>Recibido</td>
                             <td width=10%>Banco</td>
                         </tr>
                         @foreach ($transfers as $transfer)
                             <tr class="text-uppercase">
                                 <td class="text-center">{{ date('d/m/Y', strtotime($transfer->date)) }}</td>
+                                <td class="text-center">{{ str_pad($transfer->_id, 8, '0', STR_PAD_LEFT) }}</td>
                                 <td class="text-right">
                                     ${{ number_format($transfer->client_amount, 2, ',', '.') }}
                                 </td>
