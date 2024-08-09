@@ -39,8 +39,8 @@
 CBU: {{ $data->bank_account_number }}
 Titular: {{ $data->headline }}
 Banco: {{ $data->bankName }}
-Env&iacute;a: ${{ $data->headline_amount }} 🇨🇴
-Recibe: ${{ $data->client_amount }} 🇦🇷
+Env&iacute;a: ${{ number_format($data->headline_amount, 0, '', '.') }} 🇨🇴
+Recibe: ${{ number_format($data->client_amount, 0, '', '.') }} 🇦🇷
 *_V&iacute;a: {{ $data->payment_name }}_*
 @else
 *No. {{ str_pad($data->transferId, 8, '0', STR_PAD_LEFT) }} ({{ $data->country }}{{ str_pad($data->code, 4, '0', STR_PAD_LEFT) }})*
