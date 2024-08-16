@@ -20,6 +20,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        if (!app()->environment('local')) {
+            $this->app['request']->server->set('HTTPS', true);
+            URL::forceScheme('https');
+        }
         Paginator::useBootstrap();
     }
 }
