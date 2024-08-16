@@ -12,6 +12,7 @@ use App\Models\Mantenice\Rate;
 use App\Models\Transfer\Transfer;
 use Illuminate\Http\Request;
 use App\Exports\TransfersExport;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
 class TransferController extends Controller
@@ -92,12 +93,39 @@ class TransferController extends Controller
         return view('transfers.transfers.create', compact('datas', 'config', 'countries', 'banks'));
     }
 
+    private static function getOperationNumbers()
+    {
+        $dataOP = Transfer::select('op_date', 'op_month', 'date', DB::raw('month(date) as month'))->latest()->first();
+        $arr = [];
+
+        if (empty($dataOP)) {
+            $arr['op_month'] = 1;
+            $arr['op_date'] = 1;
+        } else {
+            if ($dataOP->date == date('Y-m-d')) {
+                $arr['op_date'] = $dataOP->op_date + 1;
+            } else {
+                $arr['op_date'] = 1;
+            }
+
+            if ($dataOP->month == date('m')) {
+                $arr['op_month'] = $dataOP->op_month + 1;
+            } else {
+                $arr['op_month'] = 1;
+            }
+        }
+
+        return $arr;
+    }
+
 
 
     public function store(Request $request)
     {
         // return $request;
         $rate = Rate::select('amount', 'type')->find($request->rate);
+        $opNumbers = self::getOperationNumbers();
+
         $transfer = new Transfer();
         $transfer->client_id = $request->client_id;
         $transfer->client_account_id = $request->client_account_id;
@@ -108,10 +136,9 @@ class TransferController extends Controller
         $transfer->rate_type = $rate->type;
         $transfer->bank_id = $request->bank_id;
         $transfer->pay_method_id = $request->pay_method;
+        $transfer->op_date = $opNumbers['op_date'];
+        $transfer->op_month = $opNumbers['op_month'];
         $transfer->save();
-
-
-
 
         return redirect()->route('transfers.show', $transfer->_id);
     }

@@ -22,6 +22,8 @@ return new class extends Migration
             $table->decimal("rate_amount", 20, 5);
             $table->decimal("rate_type", 20, 5);
             $table->integer("bank_id");
+            $table->integer("op_day")->nullable();
+            $table->integer("op_month")->nullable();
             $table->timestamps();
         });
     }
